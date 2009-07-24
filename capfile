@@ -1,10 +1,40 @@
-desc "lists some stuff"
-task :list, :hosts => "linode" do 
-  run "ls -l ~/"
-end
+set :host, "centosnew"
+set :path, "/home/seanhess/Blog"
+role :local, "centosnew"
+role :live, "linode"
 
-namespace :bob do 
-  desc "OK"
-  task :ok do
+desc "DB"
+namespace :db do
+  desc "Wipe out database"
+  task :migrate, :roles => :local do 
+    run "cd #{path}; rake db:migrate"
   end
 end
+
+namespace :rake do
+  desc "Run a remote rake task"
+  task :migrate, :roles => :local do 
+    run "cd #{path} ; rake db:migrate"
+  end
+end
+
+desc "Sync"
+namespace :deploy do
+
+  desc "Sync remote by default"
+  task :default do
+    remote.default
+  end
+
+  namespace :remote do
+
+      desc "Sync to remote server"
+      task :default do
+          `rsync -avz --exclude-from=.rysncignore "./" "#{host}:#{path}"`
+          run 'rake scan:all'
+      end
+  end
+end
+
+## You don't need to even create the directory
+# rsync -avz --exclude-from=.rysncignore "./" "centosnew:/home/seanhess/Blog"
