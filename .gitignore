@@ -2,5 +2,5 @@
 log/*
 *.markdown
 *demo*
-images/*
+public/images/*
 *.tmproj
