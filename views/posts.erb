@@ -1,0 +1,4 @@
+<% @posts.each do |p| %>
+	<%= erb :post, :locals => {:post => p}, :layout => false %>
+	<hr/>
+<% end %>

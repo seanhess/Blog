@@ -1,0 +1,2 @@
+require 'blog'
+run Blog

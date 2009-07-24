@@ -1,0 +1,6 @@
+.DS_Store
+log/*
+*.markdown
+*demo*
+images/*
+*.tmproj
