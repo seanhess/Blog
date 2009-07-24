@@ -1,0 +1,10 @@
+desc "lists some stuff"
+task :list, :hosts => "linode" do 
+  run "ls -l ~/"
+end
+
+namespace :bob do 
+  desc "OK"
+  task :ok do
+  end
+end
