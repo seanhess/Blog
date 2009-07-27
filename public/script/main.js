@@ -3,7 +3,9 @@ $(function() {
 		
 	$("h2,h3,h4,h5,.blog_post h1").addClass("alt");
 	$("#nav > a").each(function() {
-		if (location.match($(this).attr("href")))
+
+		var pattern = new RegExp($(this).attr("href") + "$");
+		if (location.match(pattern))
 		{
 			$(this).addClass("currentnav");
 		}
