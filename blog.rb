@@ -16,33 +16,34 @@ class Blog < Sinatra::Base
   end
   
   get '/' do
-    posts
-  end
-
-  get '/:url' do
-    post params[:url]
-  end
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  def posts(page=0)
-    
-    # :limit => PostsPerPage, :offset => PostsPerPage * page, 
-    @posts = Post.filter(:type => Post::Post).limit(PostsPerPage, PostsPerPage*page)
+    @posts = get_posts
     erb :posts
   end
 
-  def post(url)
-    @post = Post[:url => url.to_s]
+  get '/:url' do
+    @post = get_post params[:url]
+    pass if @post.nil?
     erb :post, :locals => {:post => @post}
+  end
+  
+  get '/*' do
+    erb :not_found
+  end
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  def get_posts(page=0)
+    Post.filter(:type => Post::Post).limit(PostsPerPage, PostsPerPage*page)
+  end
+
+  def get_post(url)
+    Post[:url => url.to_s]
   end
   
   
