@@ -20,9 +20,17 @@ class Blog < Sinatra::Base
     @posts = get_posts
     erb :posts
   end
+  
+  get '/tag/:name' do
+    @tag = Tag[:name => params[:name]]
+    pass if @tag.nil?
 
-  get '/:url' do
-    @post = get_post params[:url]
+    @posts = @tag.posts
+    erb :posts
+  end
+
+  get '/:post' do
+    @post = get_post params[:post]
     pass if @post.nil?
     erb :post, :locals => {:post => @post}
   end

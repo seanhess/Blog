@@ -1,0 +1,14 @@
+# BLOG SYSTEM
+
+
+
+
+
+## Todo
+
+* Change tags
+* Dates
+* Summary View / Archives
+* Single Post View
+* Comments
+* Tags
