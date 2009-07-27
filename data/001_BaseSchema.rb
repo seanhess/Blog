@@ -5,11 +5,12 @@ class BaseSchema < Sequel::Migration
   def up
     create_table! :posts do
       primary_key :id
+      String :title
       Text :body
       Time :mtime
       Time :created
       String :type, :default => Post::Post
-      String :url
+      String :file
     end
     
     create_table! :tags do 

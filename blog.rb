@@ -18,7 +18,7 @@ class Blog < Sinatra::Base
   
   get '/' do
     @posts = get_posts
-    erb :posts
+    erb :posts_list
   end
   
   get '/tag/:name' do
@@ -26,13 +26,13 @@ class Blog < Sinatra::Base
     pass if @tag.nil?
 
     @posts = @tag.posts
-    erb :posts
+    erb :posts_list
   end
 
   get '/:post' do
     @post = get_post params[:post]
     pass if @post.nil?
-    erb :post, :locals => {:post => @post}
+    erb :post_list, :locals => {:post => @post}
   end
   
   get '/css/main.css' do

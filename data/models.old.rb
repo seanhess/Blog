@@ -20,6 +20,7 @@ class Post
   has_tags_on :tags
 
   property :id, Serial
+  property :title, Text
   property :body, Text
   property :mtime, Time
   property :created, Time

@@ -1,50 +1,109 @@
 require 'rubygems'
 require 'sequel'
+require 'maruku'
 
-class Post < Sequel::Model(:posts)
+class Post < Sequel::Model
   Page = "page"
   Post = "post"
   
   many_to_many :tags
-
-  def import(url, content, tags)
-    self.mtime = Time.now
-    self.url = url
-    self.body = content
-    self.created = Time.now if self.created.nil?    
-    save
-    
-    tags.each do |t|
-      tag = Tag[:name => t]
-      
-      tag = Tag.create(:name => t) if tag.nil?
-      
-      self.add_tag tag
-    end
-  end
-      
-  def self.get_url(value)
-    ## Extract Tags
-    tags = []
-    value = value.gsub /\((\w+)\)/ do |tag|
-      tags << $1
-      ""
-    end
-
-    ## Fix URL
-    value.gsub! /\.(m|mark)down/, ""
-    value.gsub! /(posts|pages)\//, ""
-    value.gsub! /\s+/, "_"
-    value.gsub! /[^\w\d\/]+/, ""
-    
-    [value, tags]
-  end
 end
 
-class Tag < Sequel::Model(:tags)
+class Tag < Sequel::Model
   many_to_many :posts
 end
 
+
+class PostParser
+  
+  def self.parse_meta(content)
+    meta = {}
+    
+    content = content.sub /^(.*?)\n\n/m do |meta_content|
+      meta[:title] = meta_value :title, meta_content
+      meta[:tags] = meta_value :tags, meta_content
+      meta[:date] = meta_value :date, meta_content
+      ""
+    end
+        
+    [content, meta]
+  end
+  
+  def self.meta_value(name, meta_content)
+    reg = Regexp.new "#{name}: (.*)", "i"
+    match = reg.match meta_content 
+    match ? match[1] : nil
+  end
+
+
+
+  
+  
+  ## SCANNING ##
+  def self.scan_posts
+    scan "posts"
+  end
+  
+  def self.scan_pages
+    scan "pages", true
+  end
+  
+  def self.scan (dir, is_page = false)
+    scan_markdown_header
+    
+    # Scan directories for files
+    Dir.glob(File.join(dir,"**","*.markdown")) do |file|    
+
+      # See if it exists or has changed
+      mtime = File.mtime(file)
+      post = Post[:file => file] || Post.new
+      if post.mtime.nil? || mtime > post.mtime
+
+
+        # Read the file
+        f = File.new file, "r"        
+        content, meta = parse_meta f.read
+        
+        puts "[ ! ] Metadata block missing - #{file}" if meta[:title].nil?
+        
+        markdown_content = @markdown_header + content
+        html_content = Maruku.new(markdown_content).to_html
+
+        # Set the values
+        post.body = html_content
+        post.mtime = Time.now
+        post.created = Time.now if post.created.nil?
+        post.created = Time.parse meta[:date] unless meta[:date].nil?
+        post.type = Post::Page if is_page
+        post.file = file
+        post.title = meta[:title]
+        
+        post.save
+        
+        unless meta[:tags].nil?
+          tags = meta[:tags].split /\s*,\s*/
+          tags.each do |t|
+            tag = Tag[:name => t]
+            tag = Tag.create(:name => t) if tag.nil?
+            post.add_tag tag
+          end
+        end
+
+        puts "Updated: #{file}"
+        
+        # TODO: Mark cache invalidation #
+      end    
+    end
+  end
+  
+  def self.scan_markdown_header
+    if @markdown_header.nil?
+      @markdown_header = File.new(File.join(Dir.pwd,"/pages/header.markdown"), "r").read
+    end
+    
+    @markdown_header
+  end
+end
 
 
 
