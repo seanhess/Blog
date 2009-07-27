@@ -1,16 +1,31 @@
 # BLOG SYSTEM
 
 
-> Delete posts that no longer exist
-
-
 
 
 ## Todo
 
-* Change tags
-* Dates
-* Summary View / Archives
-* Single Post View
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Later
+
 * Comments
-* Tags
+* Better archives

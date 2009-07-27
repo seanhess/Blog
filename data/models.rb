@@ -7,6 +7,15 @@ class Post < Sequel::Model
   Post = "post"
   
   many_to_many :tags
+  
+  def date
+    created.strftime "%B %d, %Y"
+  end
+  
+  def update_title(value)
+    self.title = value
+    self.name = value.downcase.gsub(/[^\w]/,"_").gsub(/__/,"") unless value.nil?
+  end
 end
 
 class Tag < Sequel::Model
@@ -86,17 +95,17 @@ class PostParser
         post.created = Time.parse meta[:date] unless meta[:date].nil?
         post.kind = Post::Page if is_page
         post.file = file
-        post.title = meta[:title]
-        post.name = File.basename(file, ".markdown")
+        post.update_title meta[:title]
         
         post.save
+        post.remove_all_tags
         
         unless meta[:tags].nil?
           tags = meta[:tags].split /\s*,\s*/
           tags.each do |t|
             tag = Tag[:name => t]
             tag = Tag.create(:name => t) if tag.nil?
-            post.add_tag tag
+            post.add_tag tag unless post.tags.include? tag
           end
         end
 

@@ -16,7 +16,7 @@ class Blog < Sinatra::Base
   end
   
   get '/' do
-    @posts = get_posts
+    @posts = get_posts_page
     erb :posts_list
   end
   
@@ -26,6 +26,11 @@ class Blog < Sinatra::Base
 
     @posts = @tag.posts
     erb :posts_list
+  end
+  
+  get '/archive' do
+    @posts = get_posts
+    erb :archive
   end
 
   get '/:post' do
@@ -54,6 +59,14 @@ class Blog < Sinatra::Base
       post.name
     end
     
+    def post_date(post)
+      post.created.strftime "%B %d, %Y"
+    end
+    
+    def archive_post_date(post)
+      post.created.strftime "%B %Y"
+    end
+    
     def a_helper
       "help"
     end
@@ -65,10 +78,12 @@ class Blog < Sinatra::Base
   
   
   
+  def get_posts_page(page=0)
+    get_posts.limit(PostsPerPage, PostsPerPage*page)
+  end
   
-  
-  def get_posts(page=0)
-    Post.filter(:kind => Post::Post).limit(PostsPerPage, PostsPerPage*page)
+  def get_posts
+    Post.filter(:kind => Post::Post).reverse_order(:created)
   end
 
   def get_post(name)

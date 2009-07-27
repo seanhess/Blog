@@ -6,7 +6,7 @@
 				<a href="/tag/<%= t.name.downcase %>"><%= t.name %></a>
 			<% end %>
 		</span>
-		<span class="date"><%= post.created.strftime "%B %d, %Y" %></span>
+		<span class="date"><%= post_date post %></span>
 	</div>
 	<div class="content">
 		<%= post.body %>

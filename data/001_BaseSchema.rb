@@ -9,7 +9,7 @@ class BaseSchema < Sequel::Migration
       Text :body
       Time :mtime
       Time :created
-      String :which, :default => Post::Post
+      String :kind, :default => Post::Post
       String :file
       String :name
     end

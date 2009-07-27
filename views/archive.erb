@@ -1,0 +1,5 @@
+<div class="archive">
+	<% @posts.each do |p| %>
+		<div><span class="date"><%= archive_post_date p %></span> <a href="<%= post_url p %>"><%= p.title %></a></div>
+	<% end %>
+</div>
