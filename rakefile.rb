@@ -28,4 +28,8 @@ namespace :scan do
     PostParser.scan_posts
     PostParser.scan_pages
   end
+  
+  task :trim do
+    PostParser.trim
+  end
 end

@@ -4,7 +4,6 @@
 require 'rubygems'
 require 'sinatra/base'
 require 'erb'
-require 'controllers'
 require 'data/init'
 require 'sass'
 
@@ -32,7 +31,13 @@ class Blog < Sinatra::Base
   get '/:post' do
     @post = get_post params[:post]
     pass if @post.nil?
-    erb :post_list, :locals => {:post => @post}
+    
+    if @post.kind == Post::Page
+      erb :page, :locals => {:post => @post}
+    else
+      erb :post_full, :locals => {:post => @post}      
+    end
+    
   end
   
   get '/css/main.css' do
@@ -44,6 +49,16 @@ class Blog < Sinatra::Base
     erb :not_found
   end
   
+  helpers do 
+    def post_url(post)
+      post.name
+    end
+    
+    def a_helper
+      "help"
+    end
+  end
+  
   
   
   
@@ -53,11 +68,11 @@ class Blog < Sinatra::Base
   
   
   def get_posts(page=0)
-    Post.filter(:type => Post::Post).limit(PostsPerPage, PostsPerPage*page)
+    Post.filter(:kind => Post::Post).limit(PostsPerPage, PostsPerPage*page)
   end
 
-  def get_post(url)
-    Post[:url => url.to_s]
+  def get_post(name)
+    Post[:name => name.to_s]
   end
   
   

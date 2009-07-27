@@ -64,7 +64,7 @@ first = Post.new
 first.body = "This is a body"
 first.mtime = Time.now
 first.created = Time.now
-first.type = Post::Post
+first.kind = Post::Post
 first.url = "a/url"
 first.save
 
@@ -72,7 +72,7 @@ second = Post.new
 second.body = "Two"
 second.mtime = Time.now
 second.created = Time.now
-second.type = Post::Post
+second.kind = Post::Post
 second.url = "b/url"
 second.save
 

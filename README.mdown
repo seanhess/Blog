@@ -1,8 +1,7 @@
 # BLOG SYSTEM
 
 
-> I should really refactor how the models/helpers work. I don't like to see all that stuff in the model, but I suppose it works now since my schema is in the migration. This is annoying.. 
-
+> Delete posts that no longer exist
 
 
 

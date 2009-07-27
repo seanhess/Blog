@@ -40,6 +40,16 @@ class PostParser
   
   
   ## SCANNING ##
+  def self.trim
+    posts = Post.all.each do |post|
+      unless File.exists? post.file
+        puts "Destroyed: #{post.file}"
+        post.destroy
+      end
+      
+    end
+  end
+  
   def self.scan_posts
     scan "posts"
   end
@@ -74,9 +84,10 @@ class PostParser
         post.mtime = Time.now
         post.created = Time.now if post.created.nil?
         post.created = Time.parse meta[:date] unless meta[:date].nil?
-        post.type = Post::Page if is_page
+        post.kind = Post::Page if is_page
         post.file = file
         post.title = meta[:title]
+        post.name = File.basename(file, ".markdown")
         
         post.save
         

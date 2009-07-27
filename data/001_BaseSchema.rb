@@ -9,8 +9,9 @@ class BaseSchema < Sequel::Migration
       Text :body
       Time :mtime
       Time :created
-      String :type, :default => Post::Post
+      String :which, :default => Post::Post
       String :file
+      String :name
     end
     
     create_table! :tags do 
