@@ -6,6 +6,7 @@ require 'sinatra/base'
 require 'erb'
 require 'controllers'
 require 'data/init'
+require 'sass'
 
 class Blog < Sinatra::Base
   
@@ -24,6 +25,11 @@ class Blog < Sinatra::Base
     @post = get_post params[:url]
     pass if @post.nil?
     erb :post, :locals => {:post => @post}
+  end
+  
+  get '/css/main.css' do
+    content_type 'text/css', :charset => 'utf-8' 
+    sass :main
   end
   
   get '/*' do

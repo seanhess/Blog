@@ -1,0 +1,204 @@
+
+/// MIXINS AND VARIABLES ///
+
+!light_box = #EEF
+
+=paragraph_padding
+  margin: 1.0em 0 1.0em 0
+  
+=h2
+  font-size: 2em
+  margin-bottom: 0.75em
+
+=h3
+  font-size: 1.5em
+  line-height: 1
+  margin-bottom: 1em
+
+=h4
+  font-size: 1.2em
+  line-height: 1.25
+  margin-bottom: 1.25em
+
+=h5
+  font-size: 1em
+  font-weight: bold
+  margin-bottom: 1.5em
+
+=h6
+  font-size: 1em
+  font-weight: bold
+
+
+
+
+
+
+
+
+body
+  font-family: 'lucida grande', 'lucida sans unicade', sans-serif
+  font-size: 100%
+  line-height: 1.8em
+  background: url(../images/herald.png) fixed no-repeat
+
+  em
+    font-style: normal
+    font-weight: bold
+
+  p
+    +paragraph_padding
+    + p
+      +paragraph_padding
+      text-indent: 0em
+
+  h1
+    padding: 0px
+    margin-top: 10px
+    margin-bottom: 10px
+    
+  code, pre, textarea, tt
+    font-family: "monaco", "andale mono", "bitstream vera sans mono","consolas", monospace
+    line-height: 1.15
+    color: #222
+
+  pre, div.box, blockquote.box
+    background: #F0F0FF
+    border: 2px solid #E5E0FF
+    padding: 1em
+    margin-left: 0px
+    margin-right: 0px
+
+  code, tt
+    font-size: 1.0em
+    color: #444
+
+  
+
+
+
+  #head
+    margin-bottom: 30px  
+
+    #nav 
+      a
+        background: none
+        color: #333
+        text-transform: uppercase
+        font: 14px "lucida console"
+        text-decoration: none
+        padding-right: 10px
+
+        &:hover, &.currentnav
+          text-decoration: underline
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  #content 
+    a
+      background = !light_box
+      color: #000
+
+    h1 a, h2 a, h3 a, h4 a, h5 a
+      text-decoration: none
+      background: none
+      color: #666
+  
+    h1, h2, h3, h4, h5
+      margin-top: 1em
+      margin-bottom: 1em
+      padding: 0px
+
+    hr
+      margin: 3em 0
+      padding: 0
+      color: #eee
+
+    .blog_post
+      margin-bottom: 30px
+
+      .info
+        float: right
+
+        .date
+          color: #AAA
+          padding-left: 10px
+
+      .content
+        h1
+          +h2
+          
+        h2
+          +h3
+        
+        h3
+          +h4
+          
+        h4
+          +h5
+        
+        h5
+          +h6
+
+        .download
+          background: url('../images/download.png') no-repeat
+          min-height: 48px
+          padding-left: 58px
+
+          a
+            margin-right: 10px
+
+        div
+          &.frame
+            text-align: center
+
+            img
+              padding: 12px
+              border: solid
+              border-color: #dddddd #aaaaaa #aaaaaa #dddddd
+              border-width: 1px 2px 2px 1px
+              background-color = !light_box
+
+            a:hover img
+              background-color: #FFF
+
+          &.inline.frame
+            display: inline
+
+
+
+  #footer
+    background: #FBFBFF
+    padding-top: 20px
+    padding-bottom: 20px
+    margin-top: 40px
+    border-top: solid 30px #DDD
+
+    .badges
+      vertical-align: middle
+
+      div
+        padding: 10px
+        background = !light_box
+        border: solid 1px #DDE
+        margin: 10px
+        float: left
+
+        &:hover
+          background: #FFF
+
+      img
+        background-color: #FFF
+        padding: 10px
+  
+
+
+
+
