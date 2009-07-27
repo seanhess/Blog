@@ -32,4 +32,10 @@ namespace :scan do
   task :trim do
     PostParser.trim
   end
+  
+  task :nuke do
+    PostParser.nuke
+    PostParser.scan_posts
+    PostParser.scan_pages
+  end
 end

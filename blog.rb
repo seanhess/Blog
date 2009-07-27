@@ -20,16 +20,20 @@ class Blog < Sinatra::Base
     erb :posts_list
   end
   
+  get '/posts.rss' do
+    
+  end
+
   get '/tag/:name' do
     @tag = Tag[:name => params[:name]]
     pass if @tag.nil?
-
     @posts = @tag.posts
-    erb :posts_list
+    erb :tag
   end
   
   get '/archive' do
     @posts = get_posts
+    @title = "Archive"
     erb :archive
   end
 
@@ -56,7 +60,7 @@ class Blog < Sinatra::Base
   
   helpers do 
     def post_url(post)
-      post.name
+      "/" + post.name
     end
     
     def post_date(post)

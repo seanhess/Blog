@@ -59,6 +59,10 @@ class PostParser
     end
   end
   
+  def self.nuke
+    Post.delete
+  end
+  
   def self.scan_posts
     scan "posts"
   end
@@ -81,11 +85,12 @@ class PostParser
 
         # Read the file
         f = File.new file, "r"        
-        content, meta = parse_meta f.read
+        content, meta = parse_meta f.read        
         
         puts "[ ! ] Metadata block missing - #{file}" if meta[:title].nil?
         
-        markdown_content = @markdown_header + content
+        markdown_content = @markdown_header + "\n\n" + content
+        
         html_content = Maruku.new(markdown_content).to_html
 
         # Set the values

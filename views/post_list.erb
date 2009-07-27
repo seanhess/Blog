@@ -1,5 +1,5 @@
 <div class="blog_post">
-	<span class="meta link"><%= post_url post %></span>
+	<!--<span class="meta link"><%#= post_url post %></span>-->
 	<div class="info">
 		<span class="tags">
 			<% post.tags.each do |t| %>
@@ -9,6 +9,7 @@
 		<span class="date"><%= post_date post %></span>
 	</div>
 	<div class="content">
+		<h1><a href="<%= post_url post %>"><%= post.title %></a></h1>
 		<%= post.body %>
 	</div>
 </div>

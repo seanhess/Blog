@@ -16,14 +16,15 @@ $(function() {
 	
 	$(".blog_post .content .download a").wrap("<div></div>");
 	
-  // $(".blog_post .content h1").closest("div.blog_post").children("span.meta.link");//.wrapInner("<a href='http://google.com'></a>");
-  
-  $(".blog_post .content h1").each(function () {
-    var h1 = $(this)
-    $(this).closest("div.blog_post").find("span.meta.link").each(function () {
-      h1.wrapInner("<a href='"+$(this).html()+"'></a>");
-    })
-  })
+  // $(".blog_post .content h1").each(function () {
+  //    var h1 = $(this)
+  //    $(this).closest("div.blog_post").find("span.meta.link").each(function () {
+  //      h1.wrapInner("<a href='"+$(this).html()+"'></a>");
+  //    })
+  //  })
+	
+	
+	
 	
 	// $(".blog_post").after("<hr />");
 	
