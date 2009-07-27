@@ -5,7 +5,7 @@ require 'rubygems'
 require 'sinatra/base'
 require 'erb'
 require 'controllers'
-require 'models'
+require 'data/init'
 
 class Blog < Sinatra::Base
   
@@ -19,16 +19,8 @@ class Blog < Sinatra::Base
     posts
   end
 
-  get '/about' do
-    post :about
-  end
-  
-  get '/contact' do
-    post :contact
-  end
-  
-  get '/code' do
-    post :code
+  get '/:url' do
+    post params[:url]
   end
   
   
@@ -42,13 +34,15 @@ class Blog < Sinatra::Base
   
   
   def posts(page=0)
-    @posts = Post.all(:limit => PostsPerPage, :offset => PostsPerPage * page, :type => Post::Post)
+    
+    # :limit => PostsPerPage, :offset => PostsPerPage * page, 
+    @posts = Post.filter(:type => Post::Post).limit(PostsPerPage, PostsPerPage*page)
     erb :posts
   end
 
-  def post(name)
-    @post = Post.first(:name => name.to_s)
-    erb :post
+  def post(url)
+    @post = Post[:url => url.to_s]
+    erb :post, :locals => {:post => @post}
   end
   
   

@@ -9,6 +9,10 @@ namespace :db do
   task :migrate, :roles => :local do 
     run "cd #{path}; rake db:migrate"
   end
+  
+  task :scanall, :roles => :local do
+    run "cd #{path}; rake scan:all"
+  end
 end
 
 namespace :rake do

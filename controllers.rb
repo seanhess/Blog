@@ -1,6 +1,6 @@
 require 'rubygems'
-require 'models'
-require 'erb'
+require 'data/init'
+require 'maruku'
 
 class Scan
   
@@ -16,22 +16,29 @@ class Scan
   def scan (dir, is_page = false)
     scan_markdown_header
     
-    Dir.glob(dir + "/*.markdown") do |file|
-      name = File.basename file, ".markdown"
+    # puts File.join(dir, "*.markdown")
+    
+    Dir.glob(File.join(dir,"**","*.markdown")) do |file|      
+
+      # key the url: key
+      url, tags = Post.get_url file
+      
       mtime = File.mtime(file)
-      post = Post.first(:name => name) || Post.new
+
+      # see if it exists
+      post = Post[:url => url] || Post.new
       
       if post.mtime.nil? || mtime > post.mtime
         f = File.new file, "r"
         
         markdown_content = @markdown_header + f.read
         
-        content = Maruku.new(markdown_content).to_html
+        html_content = Maruku.new(markdown_content).to_html
         
         post.type = Post::Page if is_page
-        
-        post.import name, content
-        puts "Updated: #{name}"
+
+        post.import url, html_content, tags
+        puts "Updated: #{url}"
         
         # TODO: Mark cache invalidation #
       end    

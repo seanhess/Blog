@@ -1,32 +1,19 @@
 require 'rake'
+require 'data/init'
 require 'controllers'
 
 namespace :db do 
   task :migrate do
-    DataMapper.auto_migrate!
+    # DataMapper.auto_migrate!
+    # Post.create_table!
+    # Tag.create_table!
+    # BaseSchema.apply DB, :up
+    # AddStupidColumn.apply DB, :up
   end
   
-  task :populate do
-    Rake::Task["data:migrate"].invoke
-    
-    post = Post.new
-    post.title = "This is a title"
-    post.body = "BODY BODY BODY"
-    post.mtime = Time.now
-    post.file = "asdf.markdown"
-    post.save
-    
-    flex = Tag.new
-    flex.name = "Flex"
-    
-    ruby = Tag.new
-    ruby.name = "Ruby"
-    
-    post.tags << flex
-    
-    post.save
-    flex.save
-    ruby.save
+  task :remigrate do
+    # BaseSchema.apply DB, :down
+    # BaseSchema.apply DB, :up
   end
 end
 
