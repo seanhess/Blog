@@ -39,8 +39,8 @@ namespace :deploy do
 
       desc "Sync to remote server"
       task :default do
-          `rsync -avz --exclude-from=.rysncignore "./posts" "#{host}:#{path}"`
-          `rsync -avz --exclude-from=.rysncignore "./pages" "#{host}:#{path}"`
+          `rsync -avz --delete --exclude-from=.rysncignore "./posts" "#{host}:#{path}"`
+          `rsync -avz --delete --exclude-from=.rysncignore "./pages" "#{host}:#{path}"`
           # run 'rake scan:all'
       end
   end
