@@ -1,0 +1,1 @@
+Put posts in here. They should have a .markdown extension

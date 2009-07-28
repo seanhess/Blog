@@ -1,0 +1,1 @@
+Put pages in here. They won't show up as posts
