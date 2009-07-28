@@ -10,8 +10,8 @@
 <channel>
 	<title>Sean Clark Hess</title>
 	<atom:link href="<%= request.url %>" rel="self" type="application/rss+xml" />
-	<link><%= request.host %></link>
-	<description>Flex, Ruby, Business, Life, and Tech from Sean Clark Hess</description>
+	<link><%= full_url @rss_link %></link>
+	<description>Code, Business, Tech, and Life from Sean Clark Hess</description>
 	
 	<!--Fri, 19 Jun 2009 07:28:22 +0000-->
 	<pubDate><%= rss_date Time.now %></pubDate><!--  -->
@@ -23,7 +23,7 @@
 	<% @posts.each do |post| %>
 	<item>
 		<title><%= post.title %></title>
-		<link><%= full_post_url post %></link>
+		<link><%= full_url(post_url(post)) %></link>
 		<!--<comments>http://codearchive.seanhess.net/?p=225#comments</comments>-->
 		<pubDate><%= rss_date post.created %></pubDate><!-- Fri, 19 Jun 2009 07:27:52 +0000 -->
 		<dc:creator>sean</dc:creator>

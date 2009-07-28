@@ -20,15 +20,23 @@ class Blog < Sinatra::Base
     erb :posts_list
   end
   
-  get '/posts.rss' do
+  get '/feeds/posts' do
     @posts = get_posts_page
+    @rss_link = "/"
+    content_type 'application/rss+xml'
     erb :rss, :layout => false
   end
-
+  
+  get '/feeds/:tag' do
+    @posts, @tag = get_tag_posts params[:tag]
+    @rss_link = "/tag/" + params[:tag]
+    content_type 'application/rss+xml'
+    erb :rss, :layout => false
+  end
+  
   get '/tag/:name' do
-    @tag = Tag[:name => params[:name]]
-    pass if @tag.nil?
-    @posts = @tag.posts
+    @posts, @tag = get_tag_posts params[:name]
+    pass if @posts.empty?
     erb :tag
   end
   
@@ -59,41 +67,19 @@ class Blog < Sinatra::Base
     erb :not_found
   end
   
-  helpers do 
-    def post_url(post)
-      "/" + post.name
-    end
+
+  
+  private
+  
+  def get_tag_posts(name)
+    tag = Tag[:name => name]
     
-    def full_post_url(post)
-      "http://" + request.host + post_url(post)
-    end
-    
-    def post_date(post)
-      post.created.strftime "%B %d, %Y"
-    end
-    
-    def post_guid(post)
-      full_post_url post
-    end
-    
-    def archive_post_date(post)
-      post.created.strftime "%B %Y"
-    end
-    
-    def rss_date(time)
-      time.strftime("%a, %d %b %Y %H:%M:%S %Z")
-    end
-    
-    def a_helper
-      "help"
+    if tag.nil?
+      [[], nil]
+    else
+      [tag.posts, tag]
     end
   end
-  
-  
-  
-  
-  
-  
   
   def get_posts_page(page=0)
     get_posts.limit(PostsPerPage, PostsPerPage*page)
@@ -106,6 +92,49 @@ class Blog < Sinatra::Base
   def get_post(name)
     Post[:name => name.to_s]
   end
+  
+  
+  
+  
+  
+  
+  
+  
+  helpers do 
+    
+    def tag_url(tag)
+      "/tag/" + tag.name.downcase
+    end
+    
+    def tag_feed_url(tag)
+      "/feeds/" + tag.name.downcase
+    end
+    
+    def post_url(post)
+      "/" + post.name
+    end
+    
+    def full_url(url)
+      "http://" + request.host + url
+    end
+    
+    def post_date(post)
+      post.created.strftime "%B %d, %Y"
+    end
+    
+    def post_guid(post)
+      full_url(post_url(post))
+    end
+    
+    def archive_post_date(post)
+      post.created.strftime "%B %Y"
+    end
+    
+    def rss_date(time)
+      time.strftime("%a, %d %b %Y %H:%M:%S %Z")
+    end
+  end
+  
   
   
 end

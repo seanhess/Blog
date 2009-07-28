@@ -44,6 +44,9 @@ body
   
   .meta
     display: none
+    
+  .clear
+    clear: both
 
   em
     font-style: normal
@@ -126,6 +129,11 @@ body
       color: #AAA
       padding-left: 10px
       
+    .tag
+      .feed
+        padding-top: 10px
+        clear: both
+      
     .archive
       .post
         clear: left
@@ -204,6 +212,10 @@ body
     padding-bottom: 20px
     margin-top: 40px
     border-top: solid 30px #DDD
+    
+    .credits
+      font-size: 0.75em
+      margin-top: 1.25em
 
     .badges
       vertical-align: middle
@@ -212,7 +224,9 @@ body
         padding: 10px
         background = !light_box
         border: solid 1px #DDE
-        margin: 10px
+        margin:
+          top: 10px
+          right: 10px
         float: left
 
         &:hover

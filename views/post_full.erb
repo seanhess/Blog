@@ -2,7 +2,7 @@
 	<div class="info">
 		<span class="tags">
 			<% post.tags.each do |t| %>
-				<a href="/tag/<%= t.name.downcase %>"><%= t.name %></a>
+				<a href="<%= tag_url t %>"><%= t.name %></a>
 			<% end %>
 		</span>
 		<span class="date"><%= post.created.strftime "%B %d, %Y" %></span>
