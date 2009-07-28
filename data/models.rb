@@ -130,7 +130,7 @@ class PostParser
   
   def self.scan_markdown_header
     if @markdown_header.nil?
-      @markdown_header = File.new(File.join(Dir.pwd,"/pages/header.markdown"), "r").read
+      @markdown_header = File.new(File.join(Dir.pwd,"/pages/header.mdown"), "r").read
     end
     
     @markdown_header

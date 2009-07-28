@@ -1,16 +1,15 @@
-set :host, "centosnew"
-set :path, "/home/seanhess/Blog"
-role :local, "centosnew"
+set :host, "linode"
+set :path, "/var/www/seanhess/Blog"
 role :live, "linode"
 
 desc "DB"
 namespace :db do
   desc "Wipe out database"
-  task :migrate, :roles => :local do 
+  task :migrate, :roles => :live do 
     run "cd #{path}; rake db:migrate"
   end
   
-  task :scanall, :roles => :local do
+  task :scanall, :roles => :live do
     run "cd #{path}; rake scan:all"
   end
 end
@@ -29,13 +28,20 @@ namespace :deploy do
   task :default do
     remote.default
   end
+  
+  desc "Update the server's code"
+  task :update do
+    `git push origin master`
+    run 'cd #{path}; git pull origin master'
+  end
 
   namespace :remote do
 
       desc "Sync to remote server"
       task :default do
-          `rsync -avz --exclude-from=.rysncignore "./" "#{host}:#{path}"`
-          run 'rake scan:all'
+          `rsync -avz --exclude-from=.rysncignore "./posts" "#{host}:#{path}"`
+          `rsync -avz --exclude-from=.rysncignore "./pages" "#{host}:#{path}"`
+          # run 'rake scan:all'
       end
   end
 end
