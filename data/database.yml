@@ -2,4 +2,4 @@ adapter: mysql
 host: localhost
 username: root
 password: root
-database: blog_test_sequel
+database: custom_blog

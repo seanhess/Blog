@@ -1,1 +1,1 @@
-Put posts in here. They should have a .markdown extension
+Put posts in here. They should have a .markdown extension. This is mostly to get this to show up in git

@@ -3,3 +3,4 @@ log/*
 *.markdown
 *demo*
 *.tmproj
+.sass-cache

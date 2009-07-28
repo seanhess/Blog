@@ -1,5 +1,5 @@
 set :host, "linode"
-set :path, "/var/www/seanhess/Blog"
+set :path, "/var/www/seanhess/blog"
 role :live, "linode"
 
 desc "DB"
@@ -39,9 +39,14 @@ namespace :deploy do
 
       desc "Sync to remote server"
       task :default do
-          `rsync -avz --delete --exclude-from=.rysncignore "./posts" "#{host}:#{path}"`
-          `rsync -avz --delete --exclude-from=.rysncignore "./pages" "#{host}:#{path}"`
-          # run 'rake scan:all'
+        tweak
+        run "cd #{path}; rake scan:all"
+        run "cd #{path}; rake scan:trim"
+      end
+      
+      desc "Just changes the code"
+      task :tweak do
+        `rsync -avz --delete --exclude-from=.rysncignore "./" "#{host}:#{path}"`
       end
   end
 end

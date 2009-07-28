@@ -5,7 +5,7 @@ require 'rubygems'
 require 'sinatra/base'
 require 'erb'
 require 'data/init'
-require 'sass'
+# require 'sass'
 
 class Blog < Sinatra::Base
   
@@ -58,10 +58,10 @@ class Blog < Sinatra::Base
     
   end
   
-  get '/css/main.css' do
-    content_type 'text/css', :charset => 'utf-8' 
-    sass :main
-  end
+  # get '/css/main.css' do
+  #     content_type 'text/css', :charset => 'utf-8' 
+  #     sass :main
+  #   end
   
   get '/*' do
     erb :not_found

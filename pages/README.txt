@@ -1,1 +1,1 @@
-Put pages in here. They won't show up as posts
+Put pages in here. They won't show up as posts. This is mostly to get this to show up in git
