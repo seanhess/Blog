@@ -7,6 +7,7 @@
 ## Todo
 * RSS Feed
 ** http://ratom.rubyforge.org/
+** Just find a real rss feed and create a view for it
 
 
 
@@ -19,3 +20,4 @@
 
 * Comments
 * Better archives
+* Summary of the posts

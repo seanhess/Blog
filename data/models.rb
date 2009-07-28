@@ -12,6 +12,10 @@ class Post < Sequel::Model
     created.strftime "%B %d, %Y"
   end
   
+  def summary
+    body.gsub(/(<[^>]*>)|\n|\t/s," ")[0..300]
+  end
+  
   def update_title(value)
     self.title = value
     self.name = value.downcase.gsub(/[^\w]/,"_").gsub(/__/,"") unless value.nil?

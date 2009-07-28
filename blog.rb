@@ -21,7 +21,8 @@ class Blog < Sinatra::Base
   end
   
   get '/posts.rss' do
-    
+    @posts = get_posts_page
+    erb :rss, :layout => false
   end
 
   get '/tag/:name' do
@@ -63,12 +64,24 @@ class Blog < Sinatra::Base
       "/" + post.name
     end
     
+    def full_post_url(post)
+      "http://" + request.host + post_url(post)
+    end
+    
     def post_date(post)
       post.created.strftime "%B %d, %Y"
     end
     
+    def post_guid(post)
+      full_post_url post
+    end
+    
     def archive_post_date(post)
       post.created.strftime "%B %Y"
+    end
+    
+    def rss_date(time)
+      time.strftime("%a, %d %b %Y %H:%M:%S %Z")
     end
     
     def a_helper
