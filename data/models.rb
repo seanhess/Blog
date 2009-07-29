@@ -12,8 +12,8 @@ class Post < Sequel::Model
     created.strftime "%B %d, %Y"
   end
   
-  def summary
-    body.gsub(/(<[^>]*>)|\n|\t/s," ")[0..300]
+  def summary(length=300)
+    body.gsub(/(<[^>]*>)|\n|\t/s," ")[0..length]
   end
   
   def update_title(value)
@@ -26,7 +26,7 @@ class Post < Sequel::Model
 end
 
 class Tag < Sequel::Model
-  many_to_many :posts
+  many_to_many :posts, :order => :created.desc
 end
 
 

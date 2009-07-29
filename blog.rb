@@ -81,7 +81,7 @@ class Blog < Sinatra::Base
     if tag.nil?
       [[], nil]
     else
-      [tag.posts_dataset.reverse_order(:created).all, tag]
+      [tag.posts, tag]
     end
   end
   

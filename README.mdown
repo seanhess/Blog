@@ -8,7 +8,6 @@
 
 * Syntax coloring
 
-* Order Posts in Tags Feed
 * Comments
 * Make it validate
 
