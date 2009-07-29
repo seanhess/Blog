@@ -1,13 +1,15 @@
 <div class="tag">
-	<h2>Tag: <%= @tag.name %></h2>
+	<h2 class="alt">
+		Posts tagged with "<%= @tag.name %>"
+	</h2>
 	
 	<div class="archive">
 		<% @posts.each do |p| %>
 			<%= erb :post_inline, :layout => false, :locals => {:p => p}%>
 		<% end %>
 	</div>
-
+	
 	<div class="feed">
-		<p><a href="<%= tag_feed_url @tag %>"><%= @tag.name %> feed</a></p>
+		<p><a href="<%= tag_feed_url @tag %>">Feed for <%= @tag.name %></a></p>
 	</div>
 </div>

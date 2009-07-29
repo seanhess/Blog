@@ -8,8 +8,7 @@
 
 * Order Posts in Tags Feed
 * Comments
-* Archives with Summary
-
+* Make it validate
 
 
 

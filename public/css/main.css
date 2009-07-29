@@ -66,7 +66,8 @@ body {
     clear: both; }
   body #content .archive .tags {
     padding-right: 10px;
-    float: right; }
+    float: right;
+    height: 0px; }
     body #content .archive .tags a {
       font-size: 0.8em; }
   body #content .archive .date {
@@ -77,12 +78,14 @@ body {
     font-size: 0.75em;
     height: 2em;
     overflow: hidden;
-    text-overflow: ellipsis; }
+    text-overflow: ellipsis;
+    clear: both; }
   body #content .blog_post {
     margin-bottom: 30px; }
     body #content .blog_post .info {
       float: right;
-      margin-left: 15px; }
+      margin-left: 15px;
+      font-size: 0.75em; }
       body #content .blog_post .info .date {
         color: #AAA;
         padding-left: 10px; }
