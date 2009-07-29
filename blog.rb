@@ -23,6 +23,7 @@ class Blog < Sinatra::Base
   get '/feeds/posts' do
     @posts = get_posts_page
     @rss_link = "/"
+    @rss_type = "Posts"    
     content_type 'application/rss+xml'
     erb :rss, :layout => false
   end
@@ -30,18 +31,21 @@ class Blog < Sinatra::Base
   get '/feeds/:tag' do
     @posts, @tag = get_tag_posts params[:tag]
     @rss_link = "/tag/" + params[:tag]
+    @rss_type = params[:tag]
     content_type 'application/rss+xml'
     erb :rss, :layout => false
   end
   
   get '/tag/:name' do
+    @months = {}    
     @posts, @tag = get_tag_posts params[:name]
     pass if @posts.empty?
     erb :tag
   end
   
   get '/archive' do
-    @posts = get_posts
+    @months = {}
+    @posts = Post.filter(:kind => Post::Post).reverse_order(:created).group_by(:created)
     @title = "Archive"
     erb :archive
   end
@@ -132,6 +136,19 @@ class Blog < Sinatra::Base
     
     def rss_date(time)
       time.strftime("%a, %d %b %Y %H:%M:%S %Z")
+    end
+    
+    # def form(url, method, &block)
+    #       "hello"
+    #       yield
+    #       "ok"
+    #     end
+    
+    def form(url, method, &block)
+      @_out_buf << "<form action='#{url}' method='post'>"
+      @_out_buf << "<input type='hidden' name='_method' value='#{method}'>"
+      yield
+      @_out_buf << "</form>"
     end
   end
   

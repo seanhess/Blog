@@ -58,37 +58,34 @@ body {
     margin: 3em 0;
     padding: 0;
     color: #eee; }
-  body #content .date {
-    color: #AAA;
-    padding-left: 10px; }
   body #content .tag .feed {
     padding-top: 10px;
     clear: both; }
   body #content .archive .post {
-    clear: left; }
+    margin-bottom: 20px;
+    clear: both; }
   body #content .archive .tags {
-    float: left;
-    padding-right: 20px;
-    width: 200px; }
+    padding-right: 10px;
+    float: right; }
     body #content .archive .tags a {
-      color: #666;
-      font-size: 0.75em; }
+      font-size: 0.8em; }
   body #content .archive .date {
-    padding-right: 20px;
-    font-size: 0.75em;
-    float: left;
-    width: 100px;
-    text-align: right; }
-  body #content .archive .link {
-    float: left; }
+    color: #AAA;
+    text-align: right;
+    font-size: 0.75em; }
   body #content .archive .description {
     font-size: 0.75em;
-    color: #666; }
+    height: 2em;
+    overflow: hidden;
+    text-overflow: ellipsis; }
   body #content .blog_post {
     margin-bottom: 30px; }
     body #content .blog_post .info {
       float: right;
       margin-left: 15px; }
+      body #content .blog_post .info .date {
+        color: #AAA;
+        padding-left: 10px; }
     body #content .blog_post .content h1 {
       font-size: 2em;
       margin-bottom: 0.75em; }

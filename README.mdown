@@ -6,8 +6,9 @@
 
 ## Todo
 
-* Feedburner integration
-
+* Order Posts in Tags Feed
+* Comments
+* Archives with Summary
 
 
 
@@ -16,6 +17,3 @@
 
 ## Later
 
-* Comments
-* Better archives
-* Summary of the posts

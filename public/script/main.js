@@ -2,7 +2,8 @@ $(function() {
 	var location = window.location + "";
 		
   $(".blog_post h1").addClass("alt");
-  // $("h2,h3,h4,h5").addClass("alt");
+  // $("h2,h3,h4,h5").addC
+  lass("alt");
 	$("#nav > a").each(function() {
 
 		var pattern = new RegExp($(this).attr("href") + "$");
