@@ -45,7 +45,7 @@ class Blog < Sinatra::Base
   
   get '/archive' do
     @months = {}
-    @posts = Post.filter(:kind => Post::Post).reverse_order(:created).group_by(:created)
+    @posts = Post.filter(:kind => Post::Post).reverse_order(:created)
     @title = "Archive"
     erb :archive
   end
@@ -81,7 +81,7 @@ class Blog < Sinatra::Base
     if tag.nil?
       [[], nil]
     else
-      [tag.posts, tag]
+      [tag.posts_dataset.reverse_order(:created).all, tag]
     end
   end
   
