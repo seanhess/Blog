@@ -17,6 +17,29 @@ $(function() {
 	
 	$(".blog_post .content .download a").wrap("<div></div>");
 	
+  $(".blog_post .comments form").submit(function() {
+    
+      var form = $(this)[0]
+    
+      $.post($(this).attr("action"), $(this).serialize(), function(data, textStatus) {
+        
+        if (data == "error")
+        {
+          $(".blog_post .comments .success.message").hide();
+          $(".blog_post .comments .error.message").show();
+        }
+        else 
+        {
+          $(".blog_post .comments .error.message").hide();
+          $(".blog_post .comments .success.message").show();
+          
+          form.reset();
+          $(".blog_post .comments .each").append(data).flash();
+        }
+      })
+      return false;
+    });
+	
   // $(".blog_post .content h1").each(function () {
   //    var h1 = $(this)
   //    $(this).closest("div.blog_post").find("span.meta.link").each(function () {

@@ -1,0 +1,14 @@
+hello fool
+<% @comments.each do |comment| %>
+<item>
+	<title><%= comment.name %></title>
+	<link><%= full_url(post_url(comment.post)) %></link>
+	<pubDate><%= rss_date comment.created %></pubDate><!-- Fri, 19 Jun 2009 07:27:52 +0000 -->
+	<dc:creator><%= comment.name %></dc:creator>
+	
+	<guid isPermaLink="false"><%= "comment_#{comment.id}" %></guid>
+	<description><![CDATA[<%= comment.body %>]]></description>
+	<content:encoded><![CDATA[<%= comment.body %>]]></content:encoded>
+	<!--<wfw:commentRss>http://codearchive.seanhess.net/?feed=rss2&amp;p=225</wfw:commentRss>-->
+</item>
+<% end %>

@@ -1,0 +1,8 @@
+<div class="comment container">
+    <div class="avatar span-3 frame"><img class="frame" src="<%= comment_gravatar c %>"></div>
+    <div class="content span-17 last">
+        <div><a href="<%= c.url %>" name="<%= comment_tag c %>"><strong><%= c.name %></strong></a></div>
+        <div><%= c.body %></div>
+    </div>
+</div>
+<hr>

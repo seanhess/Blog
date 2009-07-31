@@ -32,6 +32,12 @@
 
 
 
+body.comment_success div.message.success
+  display: block ! important
+
+body.comment_error div.message.error
+  display: block ! important
+
 
 
 
@@ -83,7 +89,9 @@ body
     background = !light_box
     color: #000
 
-
+  #logo
+    a
+      background: none
 
   #head
     margin-bottom: 30px  
@@ -93,7 +101,8 @@ body
         background: none
         color: #333
         text-transform: uppercase
-        font: 14px "lucida console"
+        font-size: 14px
+        font-family: "lucida console", 'lucida grande', 'lucida sans unicade', sans-serif
         text-decoration: none
         padding-right: 10px
 
@@ -124,6 +133,8 @@ body
       margin: 3em 0
       padding: 0
       color: #eee
+      
+    
       
     .tag
       .feed
@@ -164,7 +175,25 @@ body
         .date
           color: #AAA
           padding-left: 10px
-
+          
+      .comments
+        hr
+          margin-top: 1.5em
+          margin-bottom: 1.5em
+        .message
+          display: none
+        .labels
+          padding-top: 4.5em
+          h4
+            text-align: right
+            height: 1.9em
+        form
+          input, textarea, button
+            font-size: 1.5em
+            width: 630px
+          button
+            padding: 1em
+          
       .content
         h1
           +h2
@@ -221,15 +250,20 @@ body
 
     .badges
       vertical-align: middle
+      
+      a
+        background: none
 
       div
-        padding: 10px
+        padding: 8px 8px 0px 8px
         background = !light_box
         border: solid 1px #DDE
         margin:
           top: 10px
           right: 10px
         float: left
+        
+       
 
         &:hover
           background: #FFF

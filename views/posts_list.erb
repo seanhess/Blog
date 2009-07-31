@@ -1,5 +1,5 @@
 <% @posts.each do |p| %>
 	<%= erb :post_list, :locals => {:post => p}, :layout => false %>
-	<hr/>
+	<hr>
 <% end %>
 <div><a href="/archive">Show All Posts</a></div>

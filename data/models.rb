@@ -7,6 +7,7 @@ class Post < Sequel::Model
   Post = "post"
   
   many_to_many :tags
+  one_to_many :comments
   
   def date
     created.strftime "%B %d, %Y"
@@ -27,6 +28,14 @@ end
 
 class Tag < Sequel::Model
   many_to_many :posts, :order => :created.desc
+end
+
+class Comment < Sequel::Model
+  many_to_one :posts
+  
+  def post
+    Post[:id => post_id]
+  end
 end
 
 

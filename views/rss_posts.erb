@@ -1,0 +1,18 @@
+<% @posts.each do |post| %>
+<item>
+	<title><%= post.title %></title>
+	<link><%= full_url(post_url(post)) %></link>
+	<!--<comments>http://codearchive.seanhess.net/?p=225#comments</comments>-->
+	<pubDate><%= rss_date post.created %></pubDate><!-- Fri, 19 Jun 2009 07:27:52 +0000 -->
+	<dc:creator>sean</dc:creator>
+	
+	<% post.tags.each do |t| %>
+		<category><![CDATA[<%= t.name %>]]></category>
+	<% end %>
+	
+	<guid isPermaLink="false"><%= post_guid post %></guid>
+	<description><![CDATA[<%= post.summary %>]]></description>
+	<content:encoded><![CDATA[<%= post.body %>]]></content:encoded>
+	<!--<wfw:commentRss>http://codearchive.seanhess.net/?feed=rss2&amp;p=225</wfw:commentRss>-->
+</item>
+<% end %>

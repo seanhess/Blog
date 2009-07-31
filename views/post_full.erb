@@ -12,10 +12,40 @@
 		<%= post.body %>
 	</div>
 	
-	<!--<hr />
-	
-	<%# form("/login", :post) do %>
-		<p>Username: <input type="text" name="username"></p>
-		<p>Password: <input type="password" name="password"></p>
-	<%# end %>-->
+	<!-- Just a place to dump this until its ready -->
+    <hr>
+    
+    <div class="comments">
+        <div class="each">
+    	<% post.comments.each do |c| %>
+    	   <%= erb :comment, :layout => false, :locals => {:c => c} %>
+    	<% end %>
+    	</div>
+    	
+    	<div class="success message">Your comment was added successfully</a></div>
+    	<div class="error message"><a name="comment_messages"> </a>Your comment could not be added</div>
+    	
+    	<div class="container">
+    	    <div class="span-4 labels">
+     	       <h4><label for="name">Name</label></h4>
+    	       <h4><label for="email">Email</label></h4>
+    	       <h4><label for="url">Website</label></h4>
+    	       <h4><label for="url">Type "Human"</label></h4>    	       
+    	    </div>
+    	    <div class="span-16 last fields">
+    	<% form(post_comments_url(post), :post) do %>
+    		<h3 >Leave a comment</h3>
+			<div><input type="text" name="name" id="name"></div>
+			<div><input type="text" name="email" id="email"></div>
+			<div><input type="text" name="url" id="url"></div>
+			<div><input type="text" name="check" id="check"></div>
+			<div><textarea name="body" id="body"></textarea></div>
+    		<div><button type="submit">Add Comment</button></div>
+    	<% end %>
+    	    </div>
+    	</div>
+
+    	<!--<div class="success message">Your comment was submitted successfully</div>-->
+    </div>
 </div>
+

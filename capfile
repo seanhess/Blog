@@ -23,7 +23,7 @@ end
 
 namespace :posts do
   desc "Sync them to the server"
-  task :sync, :roles => :live do
+  task :default, :roles => :live do
     `rsync -avz --delete --exclude-from=.rysncignore "./posts" "#{host}:#{path}"`
     `rsync -avz --delete --exclude-from=.rysncignore "./pages" "#{host}:#{path}"`
     run "cd #{path}; rake scan:all"
@@ -49,6 +49,7 @@ namespace :deploy do
       desc "Sync the code to the server"
       task :default do
         `rsync -avz --delete --exclude-from=.rysncignore "./" "#{host}:#{path}"`
+        run 'cd #{path}; touch tmp/restart.txt'
       end
   end
 end

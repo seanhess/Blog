@@ -1,19 +1,25 @@
 # BLOG SYSTEM
 
 
-
 ## Bugs
+
+* Stupid border on the bottom of image links.. Now that I'm using strict
 
 ## Todo
 
 * Syntax coloring
 
-* Comments
-* Make it validate
-
-
-
-
-
 ## Later
 
+## Done
+
+* Redirect glue.seanhess.net and bifff.seanhess.net to their github pages
+* Better Permalinks
+* Google Analytics
+* Comments
+* Make it validate
+* Put a HUGE banner on your old blog advertising.
+* Link your old blog to your new one
+* Safe comments
+* Page Titles
+* Comments Feed
