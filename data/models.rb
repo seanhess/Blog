@@ -15,15 +15,7 @@ class Post < Sequel::Model
   
   def summary(length=300)
     body.gsub(/(<[^>]*>)|\n|\t/s," ")[0..length]
-  end
-  
-  def update_title(value)
-    
-    raise "[ ! ] Could not find title for post" if value.nil?
-    
-    self.title = value
-    self.name = value.downcase.gsub(/[^\w]/,"_").gsub(/__/,"")
-  end
+  end  
 end
 
 class Tag < Sequel::Model
@@ -116,7 +108,8 @@ class PostParser
         post.created = Time.parse meta[:date] unless meta[:date].nil?
         post.kind = Post::Page if is_page
         post.file = file
-        post.update_title meta[:title]
+        post.title = meta[:title]
+        post.name = File.basename(file, ".markdown").downcase.gsub(/[^\w]/,"_").gsub(/__/,"_")
         
         post.save
         post.remove_all_tags

@@ -8,6 +8,7 @@
 ## Todo
 
 * Syntax coloring
+* Permalinks don't change if you update the title
 
 ## Later
 

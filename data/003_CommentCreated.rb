@@ -10,7 +10,7 @@ class CommentCreated < Sequel::Migration
   
   def down
     alter_table :comments do
-      remove_column :created
+      drop_column :created
     end
   end
 end
