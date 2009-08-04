@@ -1,15 +1,24 @@
 <div class="blog_post">
 	<!--<span class="meta link"><%#= post_url post %></span>-->
-	<div class="info">
+	<div class="info" style="text-align:right">
 		<span class="tags">
 			<% post.tags.each do |t| %>
 				<a href="<%= tag_url t %>"><%= t.name %></a>
 			<% end %>
-		</span>
+		</span>		
 		<span class="date"><%= post_date post %></span>
 	</div>
 	<div class="content">
 		<h1><a href="<%= post_url post %>"><%= post.title %></a></h1>
 		<%= post.body %>
+	</div>           
+	
+	<div class="summary">       
+	    <span class="comments"><a href="<%= post_url(post)+'#comments' %>"><%= post.comments.length %> Comments</a></span> 
+	    <span class="tags">
+			<% post.tags.each do |t| %>
+				<a href="<%= tag_url t %>"><%= t.name %></a>
+			<% end %>
+		</span>
 	</div>
 </div>

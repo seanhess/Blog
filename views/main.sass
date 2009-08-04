@@ -118,11 +118,14 @@ body
   
   
   
-  #content 
+  #content          
+    h1, h2
+      color: #222
+  
     h1 a, h2 a, h3 a, h4 a, h5 a
       text-decoration: none
       background: none
-      color: #666
+      color: #222
   
     h1, h2, h3, h4, h5
       margin-top: 1em
@@ -134,8 +137,17 @@ body
       padding: 0
       color: #eee
       
-    
-      
+    // hr.post
+    //       background: url(/images/bird.png) no-repeat 
+    //       background-position: top center
+    //       height: 56px      
+    //       margin-bottom: 5em      
+
+    div.separator
+      font-size: 10em
+      text-align: center
+      color: #AAA
+
     .tag
       .feed
         padding-top: 10px
@@ -161,11 +173,31 @@ body
         overflow: hidden
         text-overflow: ellipsis
         clear: both
+                     
         
-        
-
     .blog_post
-      margin-bottom: 30px
+      margin-bottom: 8em  
+      
+      .summary       
+        font-size: 0.75em    
+        background: #FFFFEE
+        color:  #514721 !important
+        border: 1px solid #FFE3D4
+        padding-left: 1em
+        margin-left: 0px
+        margin-right: 0px    
+
+        a
+          background: none
+        
+        .date
+          color: #AAA    
+          float: right
+          padding-right: 10px   
+          
+        .tags
+          float: right
+          padding-right: 10px  
 
       .info
         float: right

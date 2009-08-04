@@ -1,5 +1,5 @@
 set :host, "linode"
-set :path, "/var/www/seanhess/blog"
+set :path, "/var/www/seanhess.net"
 role :live, "linode"
 
 desc "DB"
