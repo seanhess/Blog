@@ -1,6 +1,12 @@
-<% @posts.each do |p| %>
-	<%= erb :post_list, :locals => {:post => p}, :layout => false %>
-	<!--<hr class="post">-->
-	<!--<div class="separator">~</div>-->
-<% end %>
+<% p = @posts.first %>
+<%= erb :post_list, :locals => {:post => p}, :layout => false %>
+<!--<hr class="post">-->
+<!--<div class="separator">~</div>-->
+
+<div class="archive">
+	<% @posts.each do |p| %>
+		<%= erb :post_inline, :layout => false, :locals => {:p => p}%>
+	<% end %>
+</div>
+
 <div><a href="/archive">Show All Posts</a></div>

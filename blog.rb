@@ -19,6 +19,7 @@ class Blog < Sinatra::Base
   end
   
   get '/' do
+    @months = {}
     @posts = get_posts_page
     erb :posts_list
   end
