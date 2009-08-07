@@ -1,0 +1,23 @@
+<div class="post container">
+	<div class="date span-3">
+		<% if @months[p.created.month.to_s + p.created.year.to_s].nil? %>
+			<% @months[p.created.month.to_s + p.created.year.to_s] = true %>
+			<%= archive_post_date p %>
+		<% else %>
+			&nbsp;
+		<% end %>	
+	</div>
+	<div class="span-17 last">
+		<div class="link">
+			<div class="tags">
+			<% p.tags.each do |t| %>
+				<a href="<%= tag_url t %>"><%= t.name %></a>
+			<% end %>
+			</div>
+			<a href="<%= post_url p %>"><%= p.title %></a>
+		</div>
+		<div class="description">
+		<%= p.first_paragraph %></div>
+	</div>
+</div>
+

@@ -3,9 +3,11 @@
 <!--<hr class="post">-->
 <!--<div class="separator">~</div>-->
 
+<h2 class="alt">More Posts</h2>
+
 <div class="archive">
 	<% @posts.each do |p| %>
-		<%= erb :post_inline, :layout => false, :locals => {:p => p}%>
+		<%= erb :post_summary, :layout => false, :locals => {:p => p}%>
 	<% end %>
 </div>
 

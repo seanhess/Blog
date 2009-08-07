@@ -16,6 +16,10 @@ class Post < Sequel::Model
   def summary(length=300)
     body.gsub(/(<[^>]*>)|\n|\t/s," ")[0..length]
   end  
+  
+  def first_paragraph()
+    body.gsub(/<p>(.*?)<\/p>/mis,"***\1***")
+  end
 end
 
 class Tag < Sequel::Model
