@@ -1,6 +1,5 @@
 <div class="all_posts">
-    <% p = @posts.first %>
-    <%= erb :post_list, :locals => {:post => p}, :layout => false %>
+    <%= erb :post_list, :locals => {:post => @first_post}, :layout => false %>
 
     <div class="post_list">
     	<% @posts.each do |post| %>

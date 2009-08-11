@@ -20,7 +20,8 @@ class Blog < Sinatra::Base
   
   get '/' do
     @months = {}
-    @posts = get_posts_page
+    @posts = get_posts_page.all
+    @first_post = @posts.shift
     erb :posts_list
   end
   
