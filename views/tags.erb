@@ -1,0 +1,6 @@
+<h2 class="alt">Tags</h2>
+<div class="tags">
+    <% @tags.each do |t| %>
+    <div><small>(<%= t.posts.length%>)</small> <a href="<%= tag_url t %>"><%= t.name  %></a></div>
+    <% end %>
+</div>

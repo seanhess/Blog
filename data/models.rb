@@ -121,6 +121,7 @@ class PostParser
         unless meta[:tags].nil?
           tags = meta[:tags].split /\s*,\s*/
           tags.each do |t|
+            t.strip!
             tag = Tag[:name => t]
             tag = Tag.create(:name => t) if tag.nil?
             post.add_tag tag unless post.tags.include? tag

@@ -18,7 +18,16 @@ namespace :cache do
   desc "Converts css"
   task :css do 
     `sudo rm -rf public/css/main.css`
-    `sass views/main.sass public/css/main.css`
+    `sudo rm -rf public/css/main.max.css`
+    `sass views/main.sass public/css/main.max.css`
+    `java -jar lib/yuicompressor-2.4.2.jar public/css/main.max.css > public/css/main.css`
+  end
+  
+  task :js do
+    `cat public/script/jquery.min.js > public/script/all.max.js`
+    `cat public/script/main.js >> public/script/all.max.js`    
+    # `cat public/script/jquery.ui.min.js >> public/script/all.max.js`
+    `java -jar lib/yuicompressor-2.4.2.jar public/script/all.max.js > public/script/all.js`
   end
 end
 

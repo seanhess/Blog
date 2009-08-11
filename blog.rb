@@ -15,7 +15,6 @@ class Blog < Sinatra::Base
   
   def initialize
     @extra_title = "Blog"
-    @tags = Tag.all
     super
   end
   
@@ -63,6 +62,17 @@ class Blog < Sinatra::Base
     @posts = Post.filter(:kind => Post::Post).reverse_order(:created)
     @title = "Archive"
     erb :archive
+  end
+  
+  get '/tags' do
+    @extra_title = "Tags"
+    @tags = Tag.all.delete_if do |tag|
+      tag.posts.length < 1
+    end
+    @tags.sort! do |a, b|
+      b.posts.length <=> a.posts.length
+    end
+    erb :tags
   end
 
   post '/posts/:post/comments' do
