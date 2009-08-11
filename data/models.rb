@@ -18,7 +18,7 @@ class Post < Sequel::Model
   end  
   
   def first_paragraph()
-    body.gsub(/<p>(.*?)<\/p>/mis,"***\1***")
+    body.gsub(/^(.*?)<\/p>.*$/mis,'\1')
   end
 end
 

@@ -1,9 +1,9 @@
-	<h2 class="alt">Archive</h2>
-	<div class="archive">
-		<% @posts.each do |p| %>
-			<%= erb :post_inline, :layout => false, :locals => {:p => p}%>
-		<% end %>
-	
-		<br>
-		<p class="clear"><strong>Old Blog</strong> - <a href="http://code.seanhess.net">code.seanhess.net</a>
-	</div>
+<h2 class="alt">Archive</h2>
+<div class="archive post_list">
+	<% @posts.each do |p| %>
+		<%= erb :post_inline, :layout => false, :locals => {:p => p}%>
+	<% end %>
+
+	<br>
+	<p class="clear"><strong>Old Blog</strong> - <a href="http://code.seanhess.net">code.seanhess.net</a>
+</div>
