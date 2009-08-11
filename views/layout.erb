@@ -34,11 +34,18 @@
 					<a class="home" href="/">Home</a>
 					<a class="code" href="/code">Code</a>
 					<a class="about" href="/about">About</a>										
-					<a class="feeds" href="/feeds">Feeds</a>										
+					<a class="feeds" href="/feeds">Feeds</a>
+					<a class="tags" href="/tags">Tags</a>
 					<a class="archive" href="/archive">Archive</a>
 				</div>
 			</div>
 			<div id="content" class="span-20 last">
+			    <div id="tags">
+			        <h2 class="alt">Tags</h2>
+			        <% @tags.each do |t| %>
+			        <a href="<%= tag_url t %>"><%= t.name %></a>
+			        <% end %>
+			    </div>
 				<%= yield %>
 			</div>
 		</div>

@@ -1,28 +1,25 @@
-<div class="post container summary">
-	<div class="date span-3">
-		<% if @months[p.created.month.to_s + p.created.year.to_s].nil? %>
-			<% @months[p.created.month.to_s + p.created.year.to_s] = true %>
-			<%= archive_post_date p %>
-		<% else %>
-			&nbsp;
-		<% end %>	
+<div class="blog_post">
+	<!--<span class="meta link"><%#= post_url post %></span>-->
+	<div class="info" style="text-align:right">
+		<span class="tags">
+			<% post.tags.each do |t| %>
+				<a href="<%= tag_url t %>"><%= t.name %></a>
+			<% end %>
+		</span>		
+		<span class="date"><%= post_date post %></span>
 	</div>
-	<div class="span-17 last">
-		<div class="link">
-			<a href="<%= post_url p %>"><%= p.title %></a>
-		</div>
-		<div class="description">
-		<%= p.first_paragraph %></div>
-		<div class="summary">       
-    	    <span class="comments"><a href="<%= post_url(p)+'#comments' %>"><%= p.comments.length %> Comments</a></span> 
-    	    <span class="tags">
-    			<% p.tags.each do |t| %>
-    				<a href="<%= tag_url t %>"><%= t.name %></a>
-    			<% end %>
-    		</span>
-    	</div>
+	<div class="content">
+		<h1><a href="<%= post_url post %>"><%= post.title %></a></h1>
+		<%= post.first_paragraph %>
+    	<p><a href="<%= post_url post %>">Read the rest »</a></p>
+	</div>           
+	
+	<div class="summary">       
+	    <span class="comments"><a href="<%= post_url(post)+'#comments' %>"><%= post.comments.length %> Comments</a></span> 
+	    <span class="tags">
+			<% post.tags.each do |t| %>
+				<a href="<%= tag_url t %>"><%= t.name %></a>
+			<% end %>
+		</span>
 	</div>
-	
-	
 </div>
-

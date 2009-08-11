@@ -15,6 +15,7 @@ class Blog < Sinatra::Base
   
   def initialize
     @extra_title = "Blog"
+    @tags = Tag.all
     super
   end
   

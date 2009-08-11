@@ -1,5 +1,18 @@
 $(function() {
 	var location = window.location + "";
+	var tagsShowing = false;
+	
+	$("#tags").hide();
+	$("a.tags").click(function() {
+	    if (tagsShowing)
+	        $("#tags").slideUp();
+	    else
+	        $("#tags").slideDown();
+	        
+	    tagsShowing = !tagsShowing;
+
+	   return false;
+	});
 		
   $(".blog_post h1").addClass("alt");
   // $("h2,h3,h4,h5").addClass("alt");

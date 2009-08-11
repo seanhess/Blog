@@ -2,11 +2,9 @@
     <% p = @posts.first %>
     <%= erb :post_list, :locals => {:post => p}, :layout => false %>
 
-    <h2 class="alt">More Posts</h2>
-
     <div class="post_list">
-    	<% @posts.each do |p| %>
-    		<%= erb :post_summary, :layout => false, :locals => {:p => p}%>
+    	<% @posts.each do |post| %>
+    		<%= erb :post_summary, :layout => false, :locals => {:post => post}%>
     	<% end %>
     </div>
 
