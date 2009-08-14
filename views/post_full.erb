@@ -1,11 +1,11 @@
 <div class="blog_post">
 	<div class="info">
 		<span class="tags">
-			<% post.tags.each do |t| %>
-				<a href="<%= tag_url t %>"><%= t.name %></a>
+			<% post.tags.each do |tag| %>
+				<a href="<%= tag_url tag %>"><%= tag %></a>
 			<% end %>
 		</span>
-		<span class="date"><%= post.created.strftime "%B %d, %Y" %></span>
+		<span class="date"><%= post_date post %></span>
 	</div>
 	<div class="content">
 		<h1><%= post.title %></h1>

@@ -4,7 +4,7 @@
 require 'rubygems'
 require 'sinatra/base'
 require 'erb'
-require 'data/init'
+require 'models'
 require 'digest/md5'
 
 # require 'sass'
@@ -20,13 +20,13 @@ class Blog < Sinatra::Base
   
   get '/' do
     @months = {}
-    @posts = get_posts_page.all
+    @posts = Post.get_first_ten
     @first_post = @posts.shift
     erb :posts_list
   end
   
   get '/feeds/posts' do
-    @posts = get_posts_page
+    @posts = Post.get_first_ten
     @rss_link = "/"
     @rss_type = "Posts"    
     content_type 'application/rss+xml'
@@ -34,7 +34,7 @@ class Blog < Sinatra::Base
   end
   
   get '/feeds/comments' do
-    @comments = Comment.reverse_order(:id).all
+    @comments = Comment.by_created
     @rss_link = "/"
     @rss_type = "Comments"
     content_type 'application/rss+xml'
@@ -42,7 +42,8 @@ class Blog < Sinatra::Base
   end
   
   get '/feeds/:tag' do
-    @posts, @tag = get_tag_posts params[:tag]
+    @tag = params[:name]
+    @posts = Post.tag_posts params[:tag]
     @rss_link = "/tag/" + params[:tag]
     @rss_type = params[:tag]
     content_type 'application/rss+xml'
@@ -50,34 +51,30 @@ class Blog < Sinatra::Base
   end
   
   get '/tag/:name' do
-    @extra_title = params[:name]
-    @months = {}    
-    @posts, @tag = get_tag_posts params[:name]
+    @tag = params[:name]
+    @posts = Post.tag_posts params[:name]
     pass if @posts.empty?
+    @extra_title = @tag
+    @months = {}    
     erb :tag
   end
   
   get '/archive' do
     @extra_title = "archive"
     @months = {}
-    @posts = Post.filter(:kind => Post::Post).reverse_order(:created)
+    @posts = Post.all_posts
     @title = "Archive"
     erb :archive
   end
   
   get '/tags' do
     @extra_title = "Tags"
-    @tags = Tag.all.delete_if do |tag|
-      tag.posts.length < 1
-    end
-    @tags.sort! do |a, b|
-      b.posts.length <=> a.posts.length
-    end
+    @tags = Post.tag_counts
     erb :tags
   end
 
   post '/posts/:post/comments' do
-    post = Post[:name => params[:post]]
+    post = get_post params[:post]
     
     unless request[:check].downcase == "human"
       # redirect(post_url(post) << "/comment_error#comment_messages") 
@@ -90,9 +87,9 @@ class Blog < Sinatra::Base
     comment.body = html_escape request[:body]
     comment.url = html_escape request[:url]
     comment.created = Time.now
+    comment.post = post
     comment.save
-    
-    post.add_comment comment
+
     # redirect(post_url(post) << "/comment_success##{comment_tag comment}")
     erb :comment, :layout => false, :locals => {:c => comment}
   end
@@ -128,26 +125,8 @@ class Blog < Sinatra::Base
   
   private
   
-  def get_tag_posts(name)
-    tag = Tag[:name => name]
-    
-    if tag.nil?
-      [[], nil]
-    else
-      [tag.posts, tag]
-    end
-  end
-  
-  def get_posts_page(page=0)
-    get_posts.limit(PostsPerPage, PostsPerPage*page)
-  end
-  
-  def get_posts
-    Post.filter(:kind => Post::Post).reverse_order(:created)
-  end
-
   def get_post(name)
-    Post[:name => name.to_s]
+    Post.by_name(:key => name.to_s).first
   end
   
   
@@ -176,11 +155,11 @@ class Blog < Sinatra::Base
     end
     
     def tag_url(tag)
-      "/tag/" + tag.name.downcase
+      "/tag/" + tag.downcase
     end
     
     def tag_feed_url(tag)
-      "/feeds/" + tag.name.downcase
+      "/feeds/" + tag.downcase
     end
     
     def post_url(post)
@@ -196,7 +175,7 @@ class Blog < Sinatra::Base
     end
     
     def post_date(post)
-      post.created.strftime "%B %d, %Y"
+      post.date.strftime "%B %d, %Y"
     end
     
     def post_guid(post)
@@ -204,7 +183,7 @@ class Blog < Sinatra::Base
     end
     
     def archive_post_date(post)
-      post.created.strftime "%B %Y"
+      post.date.strftime "%B %Y"
     end
     
     def rss_date(time)

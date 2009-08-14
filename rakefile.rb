@@ -1,5 +1,5 @@
 require 'rake'
-require 'data/init'
+require 'models'
 require 'sass'
 
 namespace :db do 

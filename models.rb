@@ -1,18 +1,103 @@
 require 'rubygems'
-require 'sequel'
+require 'couchrest'
 require 'maruku'
 
-class Post < Sequel::Model
+class Couch
+  DB = "blog"
+  Server = CouchRest.new
+  
+  def self.connect
+    Server.default_database = self::DB
+  end
+  
+  def self.db
+    Server.default_database
+  end
+  
+  def self.delete!
+    Server.default_database.delete!
+  end
+end
+
+Couch.connect
+
+class Post < CouchRest::ExtendedDocument
+  use_database Couch.db
+  unique_id :name
+  
   Page = "page"
   Post = "post"
   
-  many_to_many :tags
-  one_to_many :comments
+  property :title
+  property :body
+  property :mtime
+  property :created
+  property :kind, :default => "post"
+  property :file
+  property :name
+  property :tags
   
-  def date
-    created.strftime "%B %d, %Y"
+  view_by :name
+  view_by :file
+  view_by :kind, :created, :descending => true
+  view_by :kind
+  
+  view_by :tags, :map => "
+    function(doc) {
+      if (doc.tags) {
+        doc.tags.forEach(function(tag) {
+          emit(tag, 1);    
+        });
+      }
+    }",
+
+  :reduce => "
+    function(keys, values, rereduce) {
+      return sum(values);
+    }"
+    
+  view_by :tag, :map => "
+    function(doc) {
+      if (doc.tags)
+        for (var i in doc.tags)
+          emit(doc.tags[i].toLowerCase(), doc.name);
+
+    }"
+  
+  def self.tag_counts
+    all_tags = self.by_tags(:raw => true, :group => true, :reduce => true)['rows']
+    all_tags.map! {|row| {:name => row['key'], :count => row['value']}}
+    all_tags.sort! {|a, b| b[:count] <=> a[:count]}
   end
   
+  def self.tag_posts tag
+    self.by_tag(:key => tag)
+  end
+  
+  def tags
+    self['tags'] || ["Hello"]
+  end
+  
+  def self.get_first_ten
+    self.by_kind_and_created(:startkey => [self::Post, {}], :endkey => [self::Post,nil], :limit => 10)
+  end
+  
+  def self.all_posts
+    self.by_kind_and_created(:startkey => [self::Post, {}], :endkey => [self::Post,nil])
+  end
+  
+  def remove_all_tags
+    tags = []
+  end
+  
+  def comments
+    Comment.post_comments name
+  end
+  
+  def date
+    Time.parse(created)
+  end
+    
   def summary(length=300)
     body.gsub(/(<[^>]*>)|\n|\t/s," ")[0..length]
   end  
@@ -22,15 +107,32 @@ class Post < Sequel::Model
   end
 end
 
-class Tag < Sequel::Model
-  many_to_many :posts, :order => :created.desc
-end
-
-class Comment < Sequel::Model
-  many_to_one :posts
+class Comment < CouchRest::ExtendedDocument
+  use_database Couch.db
   
+  property :name
+  property :email
+  property :url
+  property :body
+  property :post_name
+  property :created
+  
+  view_by :post_name, :created
+  view_by :created
+  
+  def date
+    Time.parse(created)
+  end
+  
+  def self.post_comments name
+    self.by_post_name_and_created :startkey => [name,nil], :endkey => [name,{}]
+  end
+  
+  def post= post
+    self['post_name'] = post.name
+  end
   def post
-    Post[:id => post_id]
+    Post.get(post_name) if post_name
   end
 end
 
@@ -72,7 +174,8 @@ class PostParser
   end
   
   def self.nuke
-    Post.delete
+    Couch.delete!
+    Couch.connect
   end
   
   def self.scan_posts
@@ -91,8 +194,8 @@ class PostParser
 
       # See if it exists or has changed
       mtime = File.mtime(file)
-      post = Post[:file => file] || Post.new
-      if post.mtime.nil? || mtime > post.mtime
+      post = Post.by_file(:key => file).first || Post.new
+      if post.mtime.nil? || mtime > Time.parse(post.mtime)
 
 
         # Read the file
@@ -115,18 +218,14 @@ class PostParser
         post.title = meta[:title]
         post.name = File.basename(file, ".markdown").downcase.gsub(/[^\w]/,"_").gsub(/__/,"_")
         
-        post.save
         post.remove_all_tags
         
         unless meta[:tags].nil?
           tags = meta[:tags].split /\s*,\s*/
-          tags.each do |t|
-            t.strip!
-            tag = Tag[:name => t]
-            tag = Tag.create(:name => t) if tag.nil?
-            post.add_tag tag unless post.tags.include? tag
-          end
+          post.tags = tags
         end
+
+        post.save
 
         puts "Updated: #{file}"
         
@@ -143,6 +242,7 @@ class PostParser
     @markdown_header
   end
 end
+
 
 
 

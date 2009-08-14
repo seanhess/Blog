@@ -3,7 +3,7 @@ hello fool
 <item>
 	<title><%= comment.name %></title>
 	<link><%= full_url(post_url(comment.post)) %></link>
-	<pubDate><%= rss_date comment.created %></pubDate><!-- Fri, 19 Jun 2009 07:27:52 +0000 -->
+	<pubDate><%= rss_date comment.date %></pubDate><!-- Fri, 19 Jun 2009 07:27:52 +0000 -->
 	<dc:creator><%= comment.name %></dc:creator>
 	
 	<guid isPermaLink="false"><%= "comment_#{comment.id}" %></guid>

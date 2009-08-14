@@ -3,7 +3,7 @@
 	<div class="info" style="text-align:right">
 		<!--<span class="tags">
 			<%# post.tags.each do |t| %>
-				<a href="<%#= tag_url t %>"><%#= t.name %></a>
+				<a href="<%#= tag_url t %>"><%#= t %></a>
 			<%# end %>
 		</span>		-->
 		<span class="date"><%= post_date post %></span>
@@ -17,8 +17,8 @@
 	<div class="summary">       
 	    <span class="comments"><a href="<%= post_url(post)+'#comments' %>"><%= post.comments.length %> Comments</a></span> 
 	    <span class="tags">
-			<% post.tags.each do |t| %>
-				<a href="<%= tag_url t %>"><%= t.name %></a>
+			<% post.tags.each do |tag| %>
+				<a href="<%= tag_url tag %>"><%= tag %></a>
 			<% end %>
 		</span>
 	</div>
