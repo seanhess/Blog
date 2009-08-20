@@ -165,7 +165,7 @@ class Blog < Sinatra::Base
     
     def newlines_and_links(s)
       newlines = s.gsub(/\n/, '<br>')
-      links = newlines.gsub(/(http:\/\/[\w\/\.\-\d]+)/, '<a href="\1">\1</a>')
+      links = newlines.gsub(/(http:\/\/[\w\/\.\-\d]+[\w\/\d\-])/, '<a href="\1">\1</a>')
     end
     
     def comment_tag(comment)
