@@ -87,7 +87,7 @@ class Blog < Sinatra::Base
     comment = Comment.new
     comment.name = html_escape request[:name]
     comment.email = html_escape request[:email]
-    comment.body = html_escape request[:body]
+    comment.body = newlines_and_links(html_escape(request[:body]))
     comment.url = html_escape request[:url]
     comment.created = Time.now
     comment.save
@@ -161,6 +161,11 @@ class Blog < Sinatra::Base
     
     def html_escape(s)
       s.to_s.gsub(/&/, "&amp;").gsub(/\"/, "&quot;").gsub(/>/, "&gt;").gsub(/</, "&lt;")
+    end
+    
+    def newlines_and_links(s)
+      newlines = s.gsub(/\n/, '<br>')
+      links = newlines.gsub(/(http:\/\/[\w\/\.\-\d]+)/, '<a href="\1">\1</a>')
     end
     
     def comment_tag(comment)
