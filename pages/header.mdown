@@ -1,5 +1,7 @@
 [github_redbean]: http://github.com/seanhess/redbean.git "Redbean: Github"
 [github_glue]: http://github.com/seanhess/glue "Glue: Github"
+[github]: http://github.com/seanhess "Github"
 [about]: /about
 [contact]: /contact
-[code]: /code
+[code]: /projects
+[projects]: /projects
