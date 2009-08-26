@@ -4,3 +4,4 @@
 [about]: /about
 [contact]: /contact
 [code]: /code
+[feed]: http://feeds.feedburner.com/seanhess
