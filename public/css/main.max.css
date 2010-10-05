@@ -13,9 +13,6 @@ body {
     display: none; }
   body .clear {
     clear: both; }
-  body em {
-    font-style: normal;
-    font-weight: bold; }
   body p {
     margin: 1.0em 0 1.0em 0; }
     body p + p {
@@ -176,6 +173,25 @@ body {
         background-color: #FFF; }
     body #content .blog_post .content div.inline.frame {
       display: inline; }
+    body #content .blog_post .content .subblock {
+      display: inline-block;
+      vertical-align: top;
+      width: 45%;
+      background-color: #EEF;
+      padding: 10px;
+      margin: 5px;
+      color: #333; }
+      body #content .blog_post .content .subblock h3 {
+        color: #664422;
+        padding: 0;
+        margin: 0;
+        margin-bottom: 5px;
+        font-size: 1.1em; }
+      body #content .blog_post .content .subblock p {
+        padding: 0;
+        margin: 0;
+        font-size: 0.8em;
+        line-height: 1.3em; }
   body #footer {
     background: #FBFBFF;
     padding-top: 20px;
