@@ -79,7 +79,7 @@ class Blog < Sinatra::Base
   post '/posts/:post/comments' do
     post = Post[:name => params[:post]]
     
-    unless request[:check].downcase == "human"
+    unless request[:check].downcase == "hess"
       # redirect(post_url(post) << "/comment_error#comment_messages") 
       return "error"
     end
